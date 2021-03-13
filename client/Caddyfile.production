@@ -1,0 +1,9 @@
+mern.test.com:443 {
+  tls test@gmail.com
+  root * /srv
+  route {
+    reverse_proxy /api* api-server:5000
+    try_files {path} {path}/ /index.html
+    file_server
+  }
+}
