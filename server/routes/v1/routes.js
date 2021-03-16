@@ -15,4 +15,5 @@ router.delete('/user/:id', UsersCtrl.deleteUser)
 
 router.get('/poll', PollsCtrl.getPolls)
 router.post('/poll', PollsCtrl.createPoll)
+router.post('/poll/:pollId/vote', PollsCtrl.votePoll)
 module.exports = router

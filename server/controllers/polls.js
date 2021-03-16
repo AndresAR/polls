@@ -61,7 +61,41 @@ createPoll = async(req, res) => {
             })
         })
 }
+
+votePoll = async(req,res) => {
+    
+    const choice = req.body.choice;
+    const identifier = `choices.${choice}.votes`;
+    console.log({$inc: {[identifier]: 1}})
+    
+    Poll.updateOne({_id: req.params.pollId}, {$inc: {[identifier]: 1}}, {}, (err, numberAffected) => {
+        if(err){
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    err
+                })
+        }
+        if(numberAffected < 1){
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    message: `No vote!`
+                })
+        }
+        
+        return res
+            .status(200)
+            .json({
+                success: true,
+                message: `Registered vote`
+            })
+    });
+}
 module.exports = {
     getPolls,
-    createPoll
+    createPoll,
+    votePoll
 }
